@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cs2002s_assignment1;
 
 import java.io.File;
@@ -12,19 +7,21 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *Program which balances a list of numbers from a text file and writes the
- * balanced list without any extreme values without using threads
+ * balanced list without any extreme values using threads
  * @author moegamat
  */
-public class LinearProgram {
-
-    /**
-     * @param args the command line arguments
-     * @throws java.io.FileNotFoundException
-     * @throws java.io.UnsupportedEncodingException
-     */
-    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+public class ParrallelProgram {
+ 
+    public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException{
+        
         
         //get file as input
         Scanner sc = new Scanner(System.in);
@@ -75,50 +72,15 @@ public class LinearProgram {
         }
         
         
-        int counter = 0;
         
-        while(file.hasNext()){
-            
-            // add loop breaking here as exit condition
-            
-            if (counter == filterSize){
-                counter = 0;
-            }
-            
-            String current = file.nextLine();
-            String[] currentList = current.split(" ");
-            int currentNum = Integer.parseInt(currentList[0]);
-            
-            // replaces the oldest value in the filterSize with the latest
-            filtered[counter] = Float.valueOf(currentList[1]);
-            
-            float[] sorted = filtered;
-            
-            Arrays.sort(sorted);
-            
-            int[] values = new int[filterSize];
-            
-            // for the end of the data string, print the values as is and then break
-            if (currentNum >= (fileSize-halfFilter)){
-                
-                writer.print(current);
-                
-                for (int j = 0; j < halfFilter; j++){
-                    
-                  String newCurrent = file.nextLine();
-                  writer.print(newCurrent);
-                }
-            }
-            
-            else{
-                
-                writer.print(sorted[halfFilter]);
-            }
-
-            counter++;
-        }
         
-        writer.close();
+        //add starting values to the printed file
+        
+        //send the array to the threads
+        //change sum arrays code so that it takes values in the filtersize, then sorts them, then places the middle value down, then adds all the different threads doing this together
+        
+        //each thread does their calculations
+        
+        //add ending values to the printed file
     }
-    
 }
