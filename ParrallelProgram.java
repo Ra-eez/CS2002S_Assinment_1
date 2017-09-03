@@ -22,7 +22,6 @@ public class ParrallelProgram {
  
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException{
         
-        
         //get file as input
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
@@ -32,55 +31,40 @@ public class ParrallelProgram {
         Scanner file = new Scanner(f);
         String outputFile = fileName[2];
         
-        
-        
-        
         //output file
         PrintWriter writer = new PrintWriter(outputFile, "UTF-8");
-        //writer.println("The first line");
-        //writer.println("The second line");
-        //writer.close();
-        
-        
         
         // useful values
         int filterSize = Integer.parseInt(fileName[1]);
-        int halfFilter = (int)((filterSize/2) - 0.5);
+        int halfFilter = (int)((filterSize-1)/2);
         int fileSize = Integer.parseInt(file.nextLine());
-        float[] filtered = new float[filterSize];
+        float[] list = new float[fileSize];
+        OrganisedArr finalAns = new OrganisedArr(fileSize);
         
-        // print first half to the file
-        // then add the rest of the filter size to the list, but only write in the while loop
-        
-        // move the file ahead FULLFILTERSIZE length so boundaries overextended
-        
-        
-        
-        // print the first half of the filtersize to the file
-        for (int i = 0; i < (halfFilter); i++){
+        // sets list and ans(from OrganisedArr) to the values of the given array
+        for (int i = 0; i < fileSize; i++){
             
-            String[] current = file.nextLine().split(" ");
-            writer.println(Arrays.toString(current));
-            filtered[i] = Float.valueOf(current[1]);
-            
+            String[] currentLine = file.nextLine().split(" ");
+            float current = Float.valueOf(currentLine[1]);
+            list[i] = current;
+            finalAns.ans[i] = current;
         }
         
-        // adds to the list filtered without printing to the file with writer
-        for (int i = 0; i < (halfFilter + 1); i++){
-            String[] current = file.nextLine().split(" ");
-            filtered[i + halfFilter] = Float.valueOf(current[1]);
+        ThreadManager threads = new  ThreadManager(list, halfFilter, fileSize - halfFilter, halfFilter, finalAns); 
+        long startTime = System.currentTimeMillis();
+        threads.compute();
+        String totTime = ""+((System.currentTimeMillis() - startTime) / 1000.0f);
+        System.out.println(totTime);
+        
+        // write the answers to the file
+        for (int i = 0; i < fileSize; i++){
+            
+            //System.out.println("here");
+            //System.out.println(finalAns.ans[i]);
+            writer.println(fileSize);
+            writer.println((i+1)+" "+finalAns.ans[i]);
         }
         
-        
-        
-        
-        //add starting values to the printed file
-        
-        //send the array to the threads
-        //change sum arrays code so that it takes values in the filtersize, then sorts them, then places the middle value down, then adds all the different threads doing this together
-        
-        //each thread does their calculations
-        
-        //add ending values to the printed file
+        writer.close();
     }
 }
