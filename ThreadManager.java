@@ -1,10 +1,11 @@
 package cs2002s_assignment1;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
-import java.util.concurrent.RecursiveTask;
+
+// Moegamat Ra-eez Stenekamp
+// August 2017
+// Class that calculates the median of a filtersize of a given array using threads
 
 public class ThreadManager extends RecursiveAction  {
     

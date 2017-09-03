@@ -16,7 +16,8 @@ import java.util.Scanner;
 /**
  *Program which balances a list of numbers from a text file and writes the
  * balanced list without any extreme values using threads
- * @author moegamat
+ * @author Moegamat Ra-eez Stenekamp
+ * August 2017
  */
 public class ParrallelProgram {
  
@@ -50,18 +51,18 @@ public class ParrallelProgram {
             finalAns.ans[i] = current;
         }
         
-        ThreadManager threads = new  ThreadManager(list, halfFilter, fileSize - halfFilter, halfFilter, finalAns); 
-        long startTime = System.currentTimeMillis();
+        // creates, runs and times the computation and thread making process
+        ThreadManager threads = new  ThreadManager(list, halfFilter, fileSize - halfFilter, halfFilter, finalAns);
+        long startTime = System.currentTimeMillis(); // start timer
         threads.compute();
-        String totTime = ""+((System.currentTimeMillis() - startTime) / 1000.0f);
+        String totTime = ""+((System.currentTimeMillis() - startTime) / 1000.0f); // stop timer
         System.out.println(totTime);
+        
+        writer.println(fileSize);
         
         // write the answers to the file
         for (int i = 0; i < fileSize; i++){
             
-            //System.out.println("here");
-            //System.out.println(finalAns.ans[i]);
-            writer.println(fileSize);
             writer.println((i+1)+" "+finalAns.ans[i]);
         }
         

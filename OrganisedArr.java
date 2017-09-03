@@ -6,10 +6,12 @@
 package cs2002s_assignment1;
 
 /**
- *
- * @author moegamat
+ * August 2017
+ * @author Moegamat Ra-eez Stenekamp
+ * class that stores the final answer and allows the threads to post their answers to this list
  */
 public class OrganisedArr {
+    
     float[] ans;
     
    public OrganisedArr(int size){

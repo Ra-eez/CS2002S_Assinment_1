@@ -5,10 +5,8 @@
  */
 package cs2002s_assignment1;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -18,7 +16,8 @@ import java.util.Scanner;
 /**
  *Program which balances a list of numbers from a text file and writes the
  * balanced list without any extreme values without using threads
- * @author moegamat
+ * @author Moegamat Ra-eez Stenekamp
+ * August 2017
  */
 public class LinearProgram {
 
@@ -36,16 +35,11 @@ public class LinearProgram {
         
         File f = new File(fileName[0]);
         Scanner file = new Scanner(f);
-        
-        
-        FileWriter nf = new FileWriter(fileName[2]);
         String outputFile = fileName[2];
+        
+        
         //output file
-     //   PrintWriter writer = new PrintWriter(new File(outputFile));
-        //writer.println("The first line");
-        //writer.println("The second line");
-        //writer.close();
-        BufferedWriter bw = new BufferedWriter(nf);
+        PrintWriter writer = new PrintWriter(new File(outputFile));
         
         
         // useful values
@@ -53,20 +47,23 @@ public class LinearProgram {
         int halfFilter = (int)((filterSize/2) - 0.5);
         int fileSize = Integer.parseInt(file.nextLine());
         float[] filtered = new float[filterSize];
-        int printNum = halfFilter + 1;
+        String[] ans = new String[fileSize]; 
+        int p = 0;
+        int k = 1;
         
+        writer.println(fileSize);
         
-        // print the first half of the filtersize to the file
-        bw.write(fileSize);
+        // add the first half of the filtersize to the ans
         for (int i = 0; i < (halfFilter); i++){
             
             String[] current = file.nextLine().split(" ");
-    //        writer.println(Arrays.toString(current));
-            bw.write((i+1) + " " + Arrays.toString(current));
+            ans[p] = k + " " + current[1];
+            p++;
+            k++;
             filtered[i] = Float.valueOf(current[1]);  
         }
         
-        // adds to the list filtered without printing to the file with writer
+        // adds to the list filtered without adding to ans
         for (int i = 0; i < (halfFilter + 1); i++){
             
             String[] current = file.nextLine().split(" ");
@@ -75,7 +72,9 @@ public class LinearProgram {
         
         
         int counter = 0;
-        long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis(); //start timer
+        
+        // loop that does all the calculations to find the medians
         while(file.hasNext()){
             
             if (counter == filterSize){
@@ -94,42 +93,45 @@ public class LinearProgram {
             Arrays.sort(sorted);
             
             
-            // prints the end border of the array
+            // adds the end border of the array to ans
             if (currentNum >= (fileSize-halfFilter)){
                 
-     //         writer.print(current);
-                bw.write(printNum + " " + current);
-                printNum++;
-                //System.out.println(current);
+                ans[p] = k + " " + currentList[1];
+                p++;
+                k++;
                 
                 for (int j = 0; j < halfFilter; j++){
                     
                   String newCurrent = file.nextLine();
-    //              writer.print(newCurrent);
-                  bw.write(printNum + " " + newCurrent);
-                  //System.out.println(newCurrent);
-                  printNum++;
+                  String[] newCurrentL = newCurrent.split(" ");
+                  ans[p] = k + " " + newCurrentL[1];
+                  p++;
+                  k++;
                 }
                 break;
             }
             
-            //prints the median of the sorted filtersize of values
+            // adds the median of the sorted filtersize of values to ans
             else{
                 
-    //            writer.print(sorted[halfFilter]);
-                bw.write(printNum + " " + sorted[halfFilter]+"");
-                //System.out.println(sorted[halfFilter]);
-                printNum++;
+                ans[p] = k + " " + sorted[halfFilter];
+                p++;
+                k++;
             }
 
             counter++;
         }
-        String totTime = ""+((System.currentTimeMillis() - startTime) / 1000.0f);
+        
+        String totTime = ""+((System.currentTimeMillis() - startTime) / 1000.0f);// end timer
         System.out.println(totTime);
         
-    //    writer.close();
-        bw.close();
-        nf.close();
+        // write the new filtered array to the file
+        for (int i = 0; i < fileSize; i++){
+            
+            writer.println(ans[i]);
+        }
+        
+        writer.close();
     }
     
 }
